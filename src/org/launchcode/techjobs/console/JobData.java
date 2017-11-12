@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 /**
@@ -78,6 +79,35 @@ public class JobData {
 
             if (aValue.contains(value)) {
                 jobs.add(row);
+            }
+        }
+
+        return jobs;
+    }
+
+    /**
+     * Returns results of search the jobs data by value, across all columns, using
+     * inclusion of the search term.
+     *
+     * For example, searching for "Enterprise" will include results
+     * with "Enterprise Holdings, Inc", after iterating through the employer column.
+     *
+     * @param value Value of the field to search for
+     * @return List of all jobs matching the criteria
+     */
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+        // load data, if not already loaded
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+            for (Map.Entry<String, String> field: row.entrySet()) {
+                String aValue = field.getValue();
+                if (aValue.contains(value)) {
+                    jobs.add(row);
+                    break;
+                }
             }
         }
 
