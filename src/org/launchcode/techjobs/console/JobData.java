@@ -52,7 +52,9 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        return allJobs;
+        ArrayList<HashMap<String, String>> allJobsClone = new ArrayList<>(allJobs);
+
+        return allJobsClone;
     }
 
     /**
